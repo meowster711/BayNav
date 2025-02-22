@@ -7,16 +7,6 @@
 
 import Foundation
 
-// Location struct
-struct bLocation: Codable {
-    let id: Int
-    let name: String
-    let latitude: Double
-    let longitude: Double
-    let notes : String
-}
-
-
 // database of bays for now
 let bays: [bLocation] = [
     bLocation(id: 1, name: "Kaiser South Bay", latitude: 33.79032, longitude: 118.29548, notes : "Sheets are near the entrance"),
