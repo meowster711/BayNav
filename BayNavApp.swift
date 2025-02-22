@@ -11,12 +11,15 @@ import SwiftData
 @main
 struct BayNavApp: App {
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var appState = AppState.shared
 
-    var body: some Scene {
-        WindowGroup {
-            HomeView()
-                .environmentObject(locationManager)
+        var body: some Scene {
+            WindowGroup {
+                NavigationStack {
+                    HomeView()
+                        .environmentObject(LocationManager())
+                        .environmentObject(appState)
+                }
+            }
         }
     }
-}
-
