@@ -13,17 +13,19 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
 
     var body: some View {
+        // Extract userLocation outside of NavigationStack
+        let userLocation = locationManager.userLocation
+
         NavigationStack {
             // Main content
-            if let userLocation = locationManager.userLocation {
+            if let userLocation = userLocation {
                 MapView(userLocation: .constant(userLocation.coordinate))
                     .edgesIgnoringSafeArea(.all)
             } else {
                 Text("Error in Locating...")
             }
         }
-        // JADEN TO DO
-        .navigationTitle("BayNav") 
+        .navigationTitle("BayNav")
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 NavigationLink(destination: LocationsView()) {
@@ -36,7 +38,6 @@ struct HomeView: View {
                 }
             }
         }
-        //END JADEN TO DO
         .navigationDestination(
             isPresented: Binding<Bool>(
                 get: { appState.selectedDestination != nil },
@@ -47,8 +48,9 @@ struct HomeView: View {
                 }
             ),
             destination: {
-                if let destination = appState.selectedDestination {
-                    NavView(dest: destination)
+                if let destination = appState.selectedDestination,
+                   let userLocation = userLocation { // Ensure userLocation is available
+                    NavView(destination: destination)
                 }
             }
         )
